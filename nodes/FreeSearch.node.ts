@@ -1,5 +1,5 @@
+import { IExecuteFunctions } from 'n8n-core';
 import {
-	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
@@ -198,7 +198,7 @@ export class FreeSearch implements INodeType {
 		],
 	};
 
-	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+	async execute(this: IExecuteFunctions & FreeSearch): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
@@ -268,7 +268,7 @@ export class FreeSearch implements INodeType {
 					json: responseData,
 					pairedItem: { item: i },
 				});
-			} catch (error) {
+			} catch (error: any) {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
@@ -298,7 +298,6 @@ export class FreeSearch implements INodeType {
 		includeSnippets: boolean,
 	): Promise<any[]> {
 		const results: any[] = [];
-
 		try {
 			// Формируем URL для DuckDuckGo
 			let searchUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(query);
@@ -309,8 +308,10 @@ export class FreeSearch implements INodeType {
 			}
 			
 			// Добавляем параметры безопасного поиска
-			const safeSearchMap = { strict: '1', moderate: '0', off: '-1' };
-			searchUrl += `&safe_search=${safeSearchMap[safeSearch] || '0'}`;
+			const safeSearchMap = { strict: '1', moderate: '0', off: '-1' } as const;
+			searchUrl += `&safe_search=${safeSearchMap[
+  			safeSearch as keyof typeof safeSearchMap
+			]}`;
 
 			// Настройки для HTTP запроса
 			const options: OptionsWithUri = {
@@ -354,7 +355,7 @@ export class FreeSearch implements INodeType {
 			});
 
 			return results;
-		} catch (error) {
+		} catch (error: any) {
 			throw new Error(`Ошибка поиска DuckDuckGo: ${error.message}`);
 		}
 	}
