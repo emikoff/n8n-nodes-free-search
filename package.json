@@ -2,58 +2,54 @@
   "name": "n8n-nodes-free-search",
   "version": "1.0.0",
   "description": "Нода для n8n для бесплатного поиска в интернете без API ключей",
-  "keywords": [
-    "n8n-community-node-package",
-    "n8n",
-    "search",
-    "web-scraping",
-    "duckduckgo",
-    "bing",
-    "yahoo"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/your-username/n8n-nodes-free-search",
+  "homepage": "https://github.com/emikoff/n8n-nodes-free-search",
   "author": {
-    "name": "Your Name",
+    "name": "emikoff",
     "email": "your.email@example.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/n8n-nodes-free-search.git"
+    "url": "git+https://github.com/emikoff/n8n-nodes-free-search.git"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
-    "format": "prettier nodes --write",
-    "lint": "eslint nodes package.json",
-    "lintfix": "eslint nodes package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -s"
+    "format": "prettier --write \"nodes/**/*.ts\" \"*.json\"",
+    "lint": "eslint \"nodes/**/*.ts\" \"*.json\"",
+    "lintfix": "eslint \"nodes/**/*.ts\" \"*.json\" --fix",
+    "prepublishOnly": "npm run build && npm run lint"
   },
   "files": [
-    "dist"
+    "dist",
+    "nodes",
+    "gulpfile.js",
+    "tsconfig.json"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "nodes": [
-      "dist/nodes/FreeSearch/FreeSearch.node.js"
+      "dist/nodes/FreeSearch.node.js"
     ]
-  },
-  "devDependencies": {
-    "@types/node": "^16.11.22",
-    "@typescript-eslint/parser": "~5.45.0",
-    "eslint-plugin-n8n-nodes-base": "~1.11.0",
-    "gulp": "^4.0.2",
-    "n8n-workflow": "~1.0.0",
-    "prettier": "^2.7.1",
-    "typescript": "~4.8.4"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "request": "^2.88.2",
-    "@types/request": "^2.48.8"
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.22",
+    "@types/request": "^2.48.8",
+    "@types/cheerio": "^0.22.30",
+    "eslint": "^8.57.1",
+    "eslint-plugin-n8n-nodes-base": "~1.11.0",
+    "gulp": "^4.0.2",
+    "prettier": "^2.7.1",
+    "typescript": "~4.8.4",
+    "n8n-core": "^1.99.1",
+    "n8n-workflow": "^1.99.1"
   },
   "peerDependencies": {
+    "n8n-core": "*",
     "n8n-workflow": "*"
   }
 }
